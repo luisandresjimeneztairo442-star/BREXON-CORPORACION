@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brexon Corporación S.A.C. — Construyendo el Perú</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #080808;
+      --dark:     #111114;
+      --card:     #18181C;
+      --border:   #2A2A30;
+      --gold:     #C9A84C;
+      --gold-lt:  #E2C47A;
+      --white:    #F4F4F4;
+      --muted:    #888896;
+      --accent:   #7A5C1E;
+      --whatsapp: #25D366;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── CANVAS BACKGROUND ──────────────────────────────── */
+    #bg-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── NAV ────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%;
+      height: 72px;
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 14px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 46px; height: 46px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%, #d9d4c4, #a89f88 75%);
+      box-shadow: 0 0 6px rgba(201,168,76,.5);
+      padding: 3px;
+    }
+    .nav-logo-icon img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+    }
+    .nav-logo-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 20px; font-weight: 700;
+      letter-spacing: 2px; color: var(--white);
+    }
+    .nav-logo-text span { color: var(--gold); }
+
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      padding: 10px 22px;
+      border: 1px solid var(--gold);
+      color: var(--gold) !important;
+      border-radius: 2px;
+      font-size: 12px !important;
+      letter-spacing: 2px !important;
+      transition: background .2s, color .2s !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--black) !important; }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    #hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 5% 80px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 24px;
+    }
+
+    .hero-logo-3d {
+      width: 200px; height: 200px;
+      margin: 0 auto 48px;
+      position: relative;
+      animation: float 6s ease-in-out infinite;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%, #d9d4c4, #a89f88 75%);
+      box-shadow: 0 0 40px rgba(201,168,76,.3);
+      padding: 14px;
+    }
+    .hero-logo-3d img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotateY(0deg); }
+      33%       { transform: translateY(-12px) rotateY(5deg); }
+      66%       { transform: translateY(-6px) rotateY(-3deg); }
+    }
+
+    .hero-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 700;
+      line-height: .95;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .hero-title .gold { color: var(--gold); }
+
+    .hero-sub {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+      font-weight: 400; letter-spacing: 6px;
+      color: var(--muted); text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .hero-desc {
+      max-width: 600px; margin: 0 auto 52px;
+      font-size: 15px; line-height: 1.8; color: #aaa;
+    }
+
+    .hero-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-primary {
+      padding: 16px 36px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; text-decoration: none;
+      border-radius: 2px;
+      box-shadow: 0 0 30px rgba(201,168,76,.35), 0 8px 24px rgba(0,0,0,.4);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 50px rgba(201,168,76,.55), 0 12px 32px rgba(0,0,0,.5);
+    }
+    .btn-ghost {
+      padding: 16px 36px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px; font-weight: 600; letter-spacing: 2px;
+      text-transform: uppercase; text-decoration: none;
+      border-radius: 2px;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero-stats {
+      display: flex; gap: 48px; justify-content: center; flex-wrap: wrap;
+      margin-top: 72px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2.8rem; font-weight: 700; color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* ── SECTION CHROME ─────────────────────────────────── */
+    section { position: relative; z-index: 1; }
+
+    .section-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 100px 5%;
+    }
+
+    .section-label {
+      font-size: 10px; letter-spacing: 4px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .section-divider {
+      width: 60px; height: 3px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      margin-bottom: 48px;
+    }
+
+    /* ── MISION VISION ──────────────────────────────────── */
+    #mision { background: var(--dark); }
+
+    .mv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .mv-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+      transform-style: preserve-3d;
+    }
+    .mv-card:hover {
+      transform: translateY(-6px) rotateX(2deg);
+      box-shadow: 0 24px 48px rgba(0,0,0,.6), 0 0 30px rgba(201,168,76,.1);
+    }
+    .mv-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+    }
+    .mv-card-icon {
+      font-size: 2.5rem; margin-bottom: 20px;
+      filter: drop-shadow(0 0 12px rgba(201,168,76,.4));
+    }
+    .mv-card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.6rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px;
+    }
+    .mv-card p {
+      font-size: 15px; line-height: 1.85; color: #bbb;
+    }
+
+    .mv-card-bg-num {
+      position: absolute; bottom: -20px; right: -10px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 9rem; font-weight: 700;
+      color: rgba(255,255,255,.02);
+      pointer-events: none; user-select: none;
+    }
+
+    /* ── SECTORES ───────────────────────────────────────── */
+    #sectores { background: var(--black); }
+
+    .sectors-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .sector-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 36px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: transform .35s cubic-bezier(.23,1,.32,1), box-shadow .35s;
+      transform-style: preserve-3d;
+      flex: 1 1 300px;
+      max-width: 360px;
+    }
+    .sector-card:hover {
+      transform: translateY(-10px) scale(1.02) rotateX(3deg);
+      box-shadow: 0 32px 64px rgba(0,0,0,.7),
+                  0 0 0 1px var(--gold),
+                  0 0 40px rgba(201,168,76,.15);
+    }
+    .sector-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 0%, rgba(201,168,76,.07), transparent 70%);
+      opacity: 0;
+      transition: opacity .35s;
+    }
+    .sector-card:hover::after { opacity: 1; }
+
+    .sector-icon {
+      font-size: 2.8rem;
+      margin-bottom: 18px;
+      display: block;
+      filter: drop-shadow(0 0 16px rgba(201,168,76,.5));
+      transition: transform .35s;
+    }
+    .sector-card:hover .sector-icon { transform: scale(1.15) translateY(-4px); }
+
+    .sector-card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.15rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--white); margin-bottom: 10px;
+    }
+    .sector-card p {
+      font-size: 13px; line-height: 1.7; color: var(--muted);
+    }
+
+    .sector-badge {
+      position: absolute; top: 16px; right: 16px;
+      font-size: 9px; letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+    .badge-active {
+      background: rgba(201,168,76,.15);
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,.3);
+    }
+    .badge-future {
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* ── OBJETIVOS TIMELINE ─────────────────────────────── */
+    #objetivos { background: var(--dark); }
+
+    .timeline {
+      position: relative;
+      padding-left: 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold), var(--gold), transparent);
+      transform: translateX(-50%);
+    }
+
+    .tl-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+      position: relative;
+    }
+    .tl-block:nth-child(odd) .tl-content { grid-column: 1; text-align: right; }
+    .tl-block:nth-child(odd) .tl-spacer  { grid-column: 2; }
+    .tl-block:nth-child(even) .tl-spacer { grid-column: 1; }
+    .tl-block:nth-child(even) .tl-content { grid-column: 2; text-align: left; }
+
+    .tl-dot {
+      position: absolute; left: 50%; top: 20px;
+      transform: translateX(-50%);
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 20px rgba(201,168,76,.7);
+      z-index: 2;
+    }
+
+    .tl-content {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 36px 32px;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .tl-content:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.5), 0 0 20px rgba(201,168,76,.1);
+    }
+    .tl-period {
+      font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .tl-heading {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.4rem; font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .tl-list {
+      list-style: none; padding: 0;
+    }
+    .tl-list li {
+      font-size: 13.5px; line-height: 1.75; color: #aaa;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .tl-block:nth-child(odd) .tl-list li { justify-content: flex-end; }
+    .tl-list li:last-child { border-bottom: none; }
+    .tl-bullet {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0; margin-top: 8px;
+    }
+
+    /* ── VALORES 3D ─────────────────────────────────────── */
+    #valores { background: var(--black); }
+
+    .valores-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .valor-card {
+      padding: 40px 24px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+      background: linear-gradient(135deg, var(--card), #0e0e12);
+    }
+    .valor-card:hover {
+      transform: translateY(-8px) rotateY(5deg);
+      box-shadow: 0 24px 48px rgba(0,0,0,.6), 0 0 30px rgba(201,168,76,.12);
+    }
+    .valor-num {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 4rem; font-weight: 700;
+      color: rgba(201,168,76,.12);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .valor-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+    .valor-card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 8px;
+    }
+    .valor-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── CONTACT ────────────────────────────────────────── */
+    #contacto {
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .contact-info h2 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+      line-height: 1.1; margin-bottom: 20px;
+    }
+    .contact-info h2 span { color: var(--gold); }
+
+    .contact-info p {
+      font-size: 15px; line-height: 1.8; color: #aaa;
+      margin-bottom: 36px;
+    }
+
+    .contact-detail {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 18px;
+    }
+    a.contact-detail {
+      text-decoration: none;
+      transition: transform .2s;
+    }
+    a.contact-detail:hover {
+      transform: translateX(4px);
+    }
+    a.contact-detail:hover .contact-detail-text span {
+      color: var(--gold);
+    }
+    .contact-detail-icon {
+      width: 42px; height: 42px;
+      background: rgba(201,168,76,.1);
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-detail-text strong {
+      display: block; font-size: 11px;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 2px;
+    }
+    .contact-detail-text span {
+      font-size: 14px; color: #bbb;
+      transition: color .2s;
+    }
+
+    .whatsapp-cta {
+      display: inline-flex;
+      align-items: center; gap: 10px;
+      margin-top: 8px;
+      padding: 15px 30px;
+      background: var(--whatsapp);
+      color: #06210f;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; text-decoration: none;
+      border-radius: 2px;
+      box-shadow: 0 0 24px rgba(37,211,102,.35), 0 8px 24px rgba(0,0,0,.4);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .whatsapp-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 40px rgba(37,211,102,.55), 0 12px 32px rgba(0,0,0,.5);
+    }
+    .whatsapp-cta svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .contact-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 40px 36px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 11px; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 14px 16px;
+      color: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      transition: border-color .2s, box-shadow .2s;
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.1);
+    }
+    .form-group textarea { min-height: 120px; resize: vertical; }
+    .form-group select option { background: var(--card); }
+
+    .form-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--gold);
+      color: var(--black);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase;
+      border: none; border-radius: 2px;
+      cursor: pointer;
+      transition: opacity .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 0 20px rgba(201,168,76,.3);
+    }
+    .form-submit:hover {
+      opacity: .9; transform: translateY(-2px);
+      box-shadow: 0 0 40px rgba(201,168,76,.5);
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--border);
+      padding: 40px 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-brand {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 18px; font-weight: 700; letter-spacing: 2px;
+    }
+    .footer-brand span { color: var(--gold); }
+    .footer-copy {
+      font-size: 12px; color: var(--muted); letter-spacing: 1px;
+    }
+    .footer-pasco {
+      font-size: 12px; color: var(--muted);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ── PROYECTOS ──────────────────────────────────────── */
+    #proyectos { background: var(--dark); }
+
+    .proyectos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .proyecto-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform .35s cubic-bezier(.23,1,.32,1), box-shadow .35s;
+    }
+    .proyecto-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 32px 64px rgba(0,0,0,.7), 0 0 30px rgba(201,168,76,.12);
+    }
+
+    .proyecto-video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .proyecto-video {
+      width: auto;
+      height: 100%;
+      max-width: 100%;
+      display: block;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .proyecto-info { padding: 28px 30px 32px; }
+
+    .proyecto-badge {
+      display: inline-block;
+      font-size: 10px; letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .badge-completado {
+      background: rgba(125,219,106,.12);
+      color: #7DDB6A;
+      border: 1px solid rgba(125,219,106,.3);
+    }
+    .badge-ejecucion {
+      background: rgba(201,168,76,.15);
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,.3);
+    }
+
+    .proyecto-card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.35rem; font-weight: 700;
+      line-height: 1.25;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .proyecto-location {
+      font-size: 12px; letter-spacing: .3px;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .proyecto-desc {
+      font-size: 13.5px; line-height: 1.8; color: #aaa;
+    }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── FLOATING WHATSAPP BUTTON ────────────────────────── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px; right: 28px;
+      z-index: 200;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      background: var(--whatsapp);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 24px rgba(0,0,0,.4), 0 0 0 0 rgba(37,211,102,.6);
+      text-decoration: none;
+      animation: wa-pulse 2.4s infinite;
+      transition: transform .2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.08); }
+    .whatsapp-float svg { width: 30px; height: 30px; }
+    @keyframes wa-pulse {
+      0%   { box-shadow: 0 6px 24px rgba(0,0,0,.4), 0 0 0 0 rgba(37,211,102,.55); }
+      70%  { box-shadow: 0 6px 24px rgba(0,0,0,.4), 0 0 0 16px rgba(37,211,102,0); }
+      100% { box-shadow: 0 6px 24px rgba(0,0,0,.4), 0 0 0 0 rgba(37,211,102,0); }
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .mv-grid, .valores-grid { grid-template-columns: 1fr 1fr; }
+      .proyectos-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      nav .nav-links { display: none; }
+      .timeline::before { display: none; }
+      .tl-block { grid-template-columns: 1fr; }
+      .tl-block:nth-child(odd) .tl-content,
+      .tl-block:nth-child(even) .tl-content { grid-column: 1; text-align: left; }
+      .tl-block .tl-spacer { display: none; }
+      .tl-dot { display: none; }
+      .tl-block:nth-child(odd) .tl-list li { justify-content: flex-start; }
+    }
+    @media (max-width: 600px) {
+      .mv-grid, .valores-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 28px; }
+      .whatsapp-float { bottom: 18px; right: 18px; width: 52px; height: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CANVAS PARTICLES -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-icon"><img src="brexon-logo-nav.png" alt="Brexon Corporación" /></div>
+    <span class="nav-logo-text">BREXON <span>CORP.</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#mision">Nosotros</a></li>
+    <li><a href="#sectores">Sectores</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#objetivos">Objetivos</a></li>
+    <li><a href="#valores">Valores</a></li>
+    <li><a href="#contacto" class="nav-cta">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-eyebrow"></p>
+
+  <div class="hero-logo-3d">
+    <img src="brexon-logo-icon.png" alt="Brexon Corporación - Logo" />
+  </div>
+
+  <h1 class="hero-title">
+    BREXON<br/><span class="gold">CORPORACIÓN</span>
+  </h1>
+  <p class="hero-sub">S.A.C.</p>
+
+  <p class="hero-desc">
+    Ejecutamos proyectos de construcción e infraestructura con excelencia técnica,
+    transparencia y eficiencia. Socios estratégicos del Estado peruano en cada obra
+    que transforma el territorio nacional.
+  </p>
+
+  <div class="hero-btns">
+    <a href="#sectores" class="btn-primary">Nuestros Sectores</a>
+    <a href="#contacto" class="btn-ghost">Contáctenos</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num" data-target="100">0</div>
+      <div class="stat-label">% Cumplimiento Contractual</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="2035">2024</div>
+      <div class="stat-label">Visión al Año</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-target="5">0</div>
+      <div class="stat-label">Sectores de Expansión</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" data-suffix="+">Nacional</div>
+      <div class="stat-label">Presencia en el Perú</div>
+    </div>
+  </div>
+</section>
+
+<!-- MISION / VISION -->
+<section id="mision">
+  <div class="section-inner">
+    <p class="section-label reveal">Identidad Corporativa</p>
+    <h2 class="section-title reveal">Misión &amp; Visión</h2>
+    <div class="section-divider reveal"></div>
+    <div class="mv-grid">
+      <div class="mv-card reveal">
+        <div class="mv-card-icon">🏗️</div>
+        <h3>Misión</h3>
+        <p>
+          Ejecutar proyectos de construcción e infraestructura con excelencia técnica,
+          transparencia y eficiencia, generando valor sostenible para nuestros clientes,
+          las comunidades donde operamos y el Estado peruano, siendo el socio estratégico
+          de confianza en cada obra que transforme el territorio nacional.
+        </p>
+        <div class="mv-card-bg-num">M</div>
+      </div>
+      <div class="mv-card reveal">
+        <div class="mv-card-icon">🦅</div>
+        <h3>Visión</h3>
+        <p>
+          Ser el grupo empresarial más grande e influyente del Perú para el año 2035,
+          con raíces sólidas en la construcción e infraestructura pública, expandiendo
+          operaciones hacia recursos hídricos, tecnología y comercio
+          exterior, con gobierno empresarial de primer nivel y presencia en todo el
+          territorio nacional.
+        </p>
+        <div class="mv-card-bg-num">V</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORES -->
+<section id="sectores">
+  <div class="section-inner">
+    <p class="section-label reveal">Áreas de Operación</p>
+    <h2 class="section-title reveal">Sectores Estratégicos</h2>
+    <div class="section-divider reveal"></div>
+    <div class="sectors-grid">
+
+      <div class="sector-card reveal">
+        <span class="sector-badge badge-active">Activo</span>
+        <span class="sector-icon">🏛️</span>
+        <h3>Construcción e Infraestructura</h3>
+        <p>Ejecución de obras públicas con gobiernos regionales y locales, con base sólida en la región Pasco y proyección nacional.</p>
+      </div>
+
+      <div class="sector-card reveal">
+        <span class="sector-badge badge-active">Activo</span>
+        <span class="sector-icon">⛏️</span>
+        <h3>Sector Minero &amp; Energético</h3>
+        <p>Alianzas estratégicas con empresas del sector minero, energético y de saneamiento a nivel nacional.</p>
+      </div>
+
+      <div class="sector-card reveal">
+        <span class="sector-badge badge-active">Activo</span>
+        <span class="sector-icon">💧</span>
+        <h3>Recursos Hídricos</h3>
+        <p>Subsidiaria especializada en gestión y aprovechamiento del agua, saneamiento y sistemas de irrigación.</p>
+      </div>
+
+      <div class="sector-card reveal">
+        <span class="sector-badge badge-active">Activo</span>
+        <span class="sector-icon">💻</span>
+        <h3>Tecnología SaaS</h3>
+        <p>Desarrollo de soluciones de software como servicio orientadas a la gestión de infraestructura y proyectos públicos.</p>
+      </div>
+
+      <div class="sector-card reveal">
+        <span class="sector-badge badge-active">Activo</span>
+        <span class="sector-icon">🌐</span>
+        <h3>Comercio Exterior</h3>
+        <p>Expansión hacia operaciones de comercio internacional alineadas con el crecimiento corporativo del grupo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<!--
+  Videos en formato vertical (estilo TikTok / 9:16). El marco se ajusta automáticamente
+  para mostrar el video completo, sin recortarlo, con franjas negras a los costados.
+  Para que los videos se reproduzcan, coloca los archivos en la misma carpeta que este HTML
+  (o en una subcarpeta, por ejemplo "videos/") y reemplaza el "src" de cada <source> por la
+  ruta correcta. Ejemplo: <source src="videos/coopac-volcan.mp4" type="video/mp4">
+  Si prefieres usar un video de YouTube/TikTok en vez de un archivo local, dímelo y lo
+  convierto a un iframe embebido.
+-->
+<section id="proyectos">
+  <div class="section-inner">
+    <p class="section-label reveal">Obras Realizadas</p>
+    <h2 class="section-title reveal">Nuestros Proyectos</h2>
+    <div class="section-divider reveal"></div>
+    <div class="proyectos-grid">
+
+      <div class="proyecto-card reveal">
+        <div class="proyecto-video-wrap">
+          <video class="proyecto-video" controls preload="metadata">
+            <source src="OBRA CULMINADA.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+          </video>
+        </div>
+        <div class="proyecto-info">
+          <span class="proyecto-badge badge-completado">Culminado</span>
+          <h3>Remodelación Local Principal COOPAC Volcán</h3>
+          <p class="proyecto-location">📍 Jr. Manuel Rojas N° 401 (2do piso), Urb. San Juan, Distrito de Yanacancha — Provincia de Pasco, Región Pasco</p>
+          <p class="proyecto-desc">
+            Contratación para la ejecución de la obra: "Remodelación de la infraestructura del área
+            de negocios, del local principal de la COOPAC Volcán, ubicado en el Jr. Manuel Rojas
+            N° 401 (2do piso) – Urb. San Juan, distrito de Yanacancha – provincia de Pasco – región Pasco".
+          </p>
+        </div>
+      </div>
+
+      <div class="proyecto-card reveal">
+        <div class="proyecto-video-wrap">
+          <video class="proyecto-video" controls preload="metadata">
+            <source src="brexon video 4k.mp4" type="video/mp4">
+            Tu navegador no soporta la reproducción de video.
+          </video>
+        </div>
+        <div class="proyecto-info">
+          <span class="proyecto-badge badge-ejecucion">En Ejecución</span>
+          <h3>Servicios Operativos e Institucionales de Pallanchacra</h3>
+          <p class="proyecto-location">📍 Localidad de Pallanchacra, Distrito de Pallanchacra — Provincia de Pasco, Departamento de Pasco</p>
+          <p class="proyecto-desc">
+            Creación de los servicios operativos o misionales institucionales en la localidad de
+            Pallanchacra, distrito de Pallanchacra de la provincia de Pasco del departamento de Pasco.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- OBJETIVOS TIMELINE -->
+<section id="objetivos">
+  <div class="section-inner">
+    <p class="section-label reveal">Hoja de Ruta</p>
+    <h2 class="section-title reveal">Objetivos Estratégicos</h2>
+    <div class="section-divider reveal"></div>
+
+    <div class="timeline">
+
+      <div class="tl-block reveal">
+        <div class="tl-content">
+          <p class="tl-period">Corto Plazo</p>
+          <h3 class="tl-heading">2025 — 2026</h3>
+          <ul class="tl-list">
+            <li><span class="tl-bullet"></span>Consolidar la cartera de contratos con gobiernos regionales y locales en Pasco.</li>
+            <li><span class="tl-bullet"></span>Mantener 100% de cumplimiento contractual en plazos y especificaciones.</li>
+            <li><span class="tl-bullet"></span>Fortalecer la estructura administrativa y contable para soportar el crecimiento.</li>
+            <li><span class="tl-bullet"></span>Obtener certificaciones para licitaciones públicas de mayor envergadura.</li>
+          </ul>
+        </div>
+        <div class="tl-spacer"></div>
+        <div class="tl-dot"></div>
+      </div>
+
+      <div class="tl-block reveal">
+        <div class="tl-spacer"></div>
+        <div class="tl-content">
+          <p class="tl-period">Mediano Plazo</p>
+          <h3 class="tl-heading">2026 — 2030</h3>
+          <ul class="tl-list">
+            <li><span class="tl-bullet"></span>Diversificar operaciones con subsidiarias en recursos hídricos y tecnología SaaS.</li>
+            <li><span class="tl-bullet"></span>Expandir presencia operativa a nivel nacional, más allá de la región Pasco.</li>
+            <li><span class="tl-bullet"></span>Implementar sistema de compliance alineado con estándares ISO 37301.</li>
+            <li><span class="tl-bullet"></span>Desarrollar alianzas con sectores minero, energético y de saneamiento.</li>
+          </ul>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+
+      <div class="tl-block reveal">
+        <div class="tl-content">
+          <p class="tl-period">Largo Plazo</p>
+          <h3 class="tl-heading">2030 — 2035</h3>
+          <ul class="tl-list">
+            <li><span class="tl-bullet"></span>Consolidar la estructura corporativa con gobierno empresarial formal.</li>
+            <li><span class="tl-bullet"></span>Posicionar a Brexon como referente empresarial del interior del Perú.</li>
+            <li><span class="tl-bullet"></span>Alcanzar facturación entre las constructoras más relevantes del país.</li>
+            <li><span class="tl-bullet"></span>Contribuir al desarrollo sostenible, generando empleo formal y valor comunitario.</li>
+          </ul>
+        </div>
+        <div class="tl-spacer"></div>
+        <div class="tl-dot"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section id="valores">
+  <div class="section-inner">
+    <p class="section-label reveal">Pilares Corporativos</p>
+    <h2 class="section-title reveal">Nuestros Valores</h2>
+    <div class="section-divider reveal"></div>
+    <div class="valores-grid">
+      <div class="valor-card reveal">
+        <div class="valor-num">01</div>
+        <span class="valor-icon">🎯</span>
+        <h3>Excelencia</h3>
+        <p>Estándares técnicos de primer nivel en cada proyecto que ejecutamos.</p>
+      </div>
+      <div class="valor-card reveal">
+        <div class="valor-num">02</div>
+        <span class="valor-icon">🤝</span>
+        <h3>Transparencia</h3>
+        <p>Gobierno empresarial ético y comunicación honesta con todos nuestros grupos de interés.</p>
+      </div>
+      <div class="valor-card reveal">
+        <div class="valor-num">03</div>
+        <span class="valor-icon">⚡</span>
+        <h3>Eficiencia</h3>
+        <p>Optimización de recursos y cumplimiento de plazos en todos nuestros contratos.</p>
+      </div>
+      <div class="valor-card reveal">
+        <div class="valor-num">04</div>
+        <span class="valor-icon">🌿</span>
+        <h3>Sostenibilidad</h3>
+        <p>Generamos valor para las comunidades y el medio ambiente en cada región donde operamos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p class="section-label">Hablemos</p>
+        <h2>Construyamos juntos el <span>futuro</span> del Perú</h2>
+        <p>Estamos listos para ser su socio estratégico en proyectos de infraestructura, obras públicas y desarrollo territorial.</p>
+
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Sede Principal</strong>
+            <span>Prolongación Javier Prado Mz M Lt 29 - Ate Vitarte</span>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">📧</div>
+          <div class="contact-detail-text">
+            <strong>Correo Electrónico</strong>
+            <span>contacto@brexoncorporacion.com</span>
+          </div>
+        </div>
+        <a href="https://wa.me/51955423649?text=Hola%20Brexon%20Corporaci%C3%B3n%20necesito%20tus%20servicios%20para%20%3A" target="_blank" rel="noopener" class="contact-detail">
+          <div class="contact-detail-icon">📞</div>
+          <div class="contact-detail-text">
+            <strong>Teléfono / WhatsApp</strong>
+            <span>+51 955423649</span>
+          </div>
+        </a>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">🏢</div>
+          <div class="contact-detail-text">
+            <strong>Razón Social</strong>
+            <span>Brexon Corporación S.A.C.</span>
+          </div>
+        </div>
+
+        <a href="https://wa.me/51955423649?text=Hola%20Brexon%20Corporaci%C3%B3n%20necesito%20tus%20servicios%20para%20%3A" target="_blank" rel="noopener" class="whatsapp-cta">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.486 2 2.01 6.477 2.01 11.996c0 2.114.658 4.075 1.782 5.688L2.5 22l4.436-1.264a9.94 9.94 0 0 0 5.068 1.386h.004c5.518 0 9.994-4.477 9.994-9.997C22.002 6.605 17.53 2 12.004 2zm0 18.05a8.005 8.005 0 0 1-4.28-1.238l-.307-.183-3.19.91.918-3.11-.2-.32a7.98 7.98 0 0 1-1.226-4.253c0-4.428 3.606-8.03 8.09-8.03 4.424 0 8.024 3.607 8.024 8.03 0 4.427-3.606 8.194-8.03 8.194z"/></svg>
+          Escríbenos por WhatsApp
+        </a>
+      </div>
+
+      <form class="contact-form reveal" name="contacto-brexon" method="POST" data-netlify="true" netlify-honeypot="bot-field" onsubmit="return handleSubmit(event, this)">
+        <input type="hidden" name="form-name" value="contacto-brexon" />
+        <p style="display:none;">
+          <label>No llenar si eres humano: <input name="bot-field" /></label>
+        </p>
+        <div class="form-group">
+          <label>Nombre Completo</label>
+          <input type="text" name="nombre" placeholder="Ej. Juan Pérez García" required />
+        </div>
+        <div class="form-group">
+          <label>Correo Electrónico</label>
+          <input type="email" name="email" placeholder="correo@empresa.pe" required />
+        </div>
+        <div class="form-group">
+          <label>Tipo de Consulta</label>
+          <select name="tipo_consulta" required>
+            <option value="">Seleccione una opción…</option>
+            <option>Proyecto de Construcción</option>
+            <option>Licitación Pública</option>
+            <option>Alianza Estratégica</option>
+            <option>Consultoría</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Mensaje</label>
+          <textarea name="mensaje" placeholder="Cuéntenos sobre su proyecto o consulta…" required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Enviar Consulta</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">BREXON <span>CORPORACIÓN</span> S.A.C.</div>
+  <div class="footer-copy">© 2026 Brexon Corporación S.A.C. Todos los derechos reservados.</div>
+  <div class="footer-pasco">📍 Prolongación Javier Prado - Ate Vitarte</div>
+</footer>
+
+<!-- BOTÓN FLOTANTE DE WHATSAPP -->
+<a href="https://wa.me/51955423649?text=Hola%20Brexon%20Corporaci%C3%B3n%20necesito%20tus%20servicios%20para%20%3A" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="#06210f"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.198.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.486 2 2.01 6.477 2.01 11.996c0 2.114.658 4.075 1.782 5.688L2.5 22l4.436-1.264a9.94 9.94 0 0 0 5.068 1.386h.004c5.518 0 9.994-4.477 9.994-9.997C22.002 6.605 17.53 2 12.004 2zm0 18.05a8.005 8.005 0 0 1-4.28-1.238l-.307-.183-3.19.91.918-3.11-.2-.32a7.98 7.98 0 0 1-1.226-4.253c0-4.428 3.606-8.03 8.09-8.03 4.424 0 8.024 3.607 8.024 8.03 0 4.427-3.606 8.194-8.03 8.194z"/></svg>
+</a>
+
+<script>
+  /* ── PARTICLE CANVAS ─────────────────────────────── */
+  (function() {
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+    const GOLD = 'rgba(201,168,76,';
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    function Particle() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - .5) * .4;
+      this.vy = (Math.random() - .5) * .4;
+      this.r = Math.random() * 1.5 + .5;
+      this.a = Math.random() * .4 + .1;
+    }
+
+    Particle.prototype.update = function() {
+      this.x += this.vx; this.y += this.vy;
+      if (this.x < 0) this.x = W;
+      if (this.x > W) this.x = 0;
+      if (this.y < 0) this.y = H;
+      if (this.y > H) this.y = 0;
+    };
+
+    function init() {
+      resize();
+      particles = Array.from({length: 80}, () => new Particle());
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist < 150) {
+            ctx.beginPath();
+            ctx.strokeStyle = GOLD + (0.07 * (1 - dist/150)) + ')';
+            ctx.lineWidth = .5;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+        particles[i].update();
+        ctx.beginPath();
+        ctx.fillStyle = GOLD + particles[i].a + ')';
+        ctx.arc(particles[i].x, particles[i].y, particles[i].r, 0, Math.PI*2);
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize);
+    init(); draw();
+  })();
+
+  /* ── SCROLL REVEAL ───────────────────────────────── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        // stagger siblings
+        const siblings = e.target.parentElement.querySelectorAll('.reveal');
+        let i = 0;
+        siblings.forEach(s => {
+          if (!s.classList.contains('visible')) {
+            s.style.transitionDelay = (i * 0.08) + 's';
+          }
+          i++;
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── COUNTER ANIMATION ───────────────────────────── */
+  const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = parseInt(el.dataset.target);
+        if (!target || el.dataset.animated) return;
+        el.dataset.animated = '1';
+        const start = parseInt(el.dataset.start || 0);
+        const dur = 1800;
+        const startTime = performance.now();
+        function tick(now) {
+          const t = Math.min((now - startTime) / dur, 1);
+          const ease = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(start + (target - start) * ease);
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterObs.unobserve(el);
+      }
+    });
+  }, {threshold: 0.5});
+
+  document.querySelectorAll('[data-target]').forEach(el => {
+    el.dataset.start = parseInt(el.textContent) || 0;
+    counterObs.observe(el);
+  });
+
+  /* ── 3D TILT ON CARDS ────────────────────────────── */
+  document.querySelectorAll('.sector-card, .mv-card, .proyecto-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const rx = (e.clientY - cy) / (rect.height / 2) * -8;
+      const ry = (e.clientX - cx) / (rect.width  / 2) *  8;
+      card.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-6px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+
+  /* ── FORM SUBMIT HANDLER (Netlify Forms) ─────────── */
+  function handleSubmit(event, form) {
+    event.preventDefault();
+    const btn = form.querySelector('.form-submit');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+
+    const data = new FormData(form);
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(data).toString()
+    })
+      .then(() => {
+        btn.textContent = '✓ Mensaje Enviado';
+        btn.style.background = '#2d5a27';
+        btn.style.color = '#7DDB6A';
+        form.reset();
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.disabled = false;
+        }, 3500);
+      })
+      .catch(() => {
+        btn.textContent = 'Error, intenta de nuevo';
+        btn.style.background = '#5a2727';
+        btn.style.color = '#ff8080';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '';
+          btn.style.color = '';
+          btn.disabled = false;
+        }, 3500);
+      });
+
+    return false;
+  }
+</script>
+</body>
+</html>
